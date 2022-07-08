@@ -54,6 +54,8 @@ rbindExample
 
 # 4.Split a string, then concatenate the results back together
 splitStrExample <- "This String"
+splitStrExample
 splitStr <- strsplit(splitStrExample, " ")
-finalStr <- paste(splitStr, collapse=" ")
+finalStr <- unlist(splitStr)
+finalStr <- paste(finalStr, collapse=" ")
 finalStr
