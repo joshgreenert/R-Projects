@@ -1,0 +1,127 @@
+---
+title: "ASSIGNMENT 5"
+author: "Joshua Greenert"
+date: '7/23/2022'
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+# Set the working directory.
+```{r setup}
+knitr::opts_knit$set(root.dir = normalizePath("C:/Users/Josh/Documents/GitHub/R-Projects/Statistics For Data Science"))
+```
+
+```{r include=FALSE, echo=FALSE}
+# libraries
+library(rmarkdown)
+library(knitr)
+library(ggplot2)
+library(ggm)
+theme_set(theme_minimal())
+```
+# Show the head of the data.
+```{r echo=FALSE}
+surveyResults = read.csv("data/student-survey.csv")
+head(surveyResults)
+
+# Show the covariance.
+
+
+```
+# Show the covariance
+```{r echo=FALSE}
+covarianceAll = cov(surveyResults)
+covarianceAll
+
+```
+Using this calculation allows us to see the relationships between the data.  When there is a positive
+covariance, the two sets of data appear to move together; whereas, if the covariance is negative,
+the two sets of data move away from one another.  The results indicate that the variables TimeTV and 
+Happiness appear to have a positive covariance while TimeReading and Happiness have a negative covariance.
+
+# Examine the Survey data variables
+**TimeReading** - appears to be in units of hours per week.\
+**TimeTV** - appears to be in units of hours per week.\
+**Happiness** - appears to be a percentage of overall happiness reported.\
+**Gender** - appears to be binary between male or female.\
+
+Since both measurements of time are in the same units, the covariance would not be impacted on the result
+of comparing the two measurements.  When comparing these against a percentage, however, there may be a
+significant difference in the output expected.  Nevertheless, the variables are suitable as they are since
+they show a decent reflection of the dataset.
+
+# Choose a correlation test to perform: pearson
+This test is a wise choice as it measures the strength of the linear relationship between normally
+distributed variables and is the default for most correlation tests.
+
+# Perform a correlation analysis
+## All Variables
+```{r echo=FALSE}
+correlationAll = cor(surveyResults)
+correlationAll
+```
+## Single correlation between pair of variables
+```{r echo=FALSE}
+tvHappyCor = cor(surveyResults$TimeTV, surveyResults$Happiness)
+readingHappyCor = cor(surveyResults$TimeReading, surveyResults$Happiness)
+print('Correlation between tv and happiness')
+tvHappyCor
+print('Correlation between reading and happiness')
+readingHappyCor
+```
+## Repeat the correlation test with confidence internal at 99%
+```{r echo=FALSE}
+print('Correlation between tv and happiness with Confidence intervals')
+tvHappyCorTest = cor.test(surveyResults$TimeTV, surveyResults$Happiness, conf.level = 0.99)
+tvHappyCorTest
+
+print('Correlation between reading and happiness with Confidence intervals')
+readingHappyCorTest = cor.test(surveyResults$TimeReading, surveyResults$Happiness, alternative = "less", conf.level = 0.99)
+readingHappyCorTest
+```
+## Describe what the calculations suggest
+The correlation tests provided data that suggested it was likely that there was both a negative and positive 
+correlation among the variables chosen.  Further tests with confidence intervals also suggest that there is a 
+positive correlation between tv time and happiness, while there is a negative correlation between reading and 
+happiness.  
+
+# Calculate the correlation coefficient and coefficient of determination; describe the results
+```{r echo=FALSE}
+print('Correlation coefficient between tv and happiness')
+(tvHappyCor^2) * 100
+print('Correlation coefficient between reading and happiness')
+(readingHappyCor^2) * 100
+```
+From the data above, we can assess that tv is positively correlated with happiness but that it can 
+only account for 40.52% of the variation in terms of happiness.  Alternatively, we can assess that 
+reading is negatively correlated with happiness and that it can only account for 18.91% of the variation
+in terms of happiness.  There remains 59.48% variability for tv and 81.09% variability that is unexplained
+by the two samples provided.
+
+# Can you say that watching more TV caused students to read less?
+The data that is provided doesn't conclude whether Tv engagement effected reading.  Instead, the data
+suggests happiness may not be as prevalent within reading as it is in TV.
+
+## Partial Correlation Test with "reading" set as the control
+```{r echo=FALSE}
+partialCorrTest = pcor(c("TimeTV", "Happiness", "TimeReading"), var(surveyResults))
+partialCorrTest
+print('The result squared')
+partialCorrTest^2
+```
+From the data, we can determine that reading accounted for approximately 35.72% of the variability 
+between happiness and TV.  Therefore, it does have an effect on the results and suggests that TV usage 
+may cause students to read less.  
+
+
+
+
+
+
+
+
+
+
+
+
