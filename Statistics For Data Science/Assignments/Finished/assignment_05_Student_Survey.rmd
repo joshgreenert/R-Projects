@@ -7,13 +7,13 @@ output:
   html_document: default
   pdf_document: default
 ---
+
 # Set the working directory.
 ```{r setup}
 knitr::opts_knit$set(root.dir = normalizePath("C:/Users/Josh/Documents/GitHub/R-Projects/Statistics For Data Science"))
 ```
-
-```{r include=FALSE, echo=FALSE}
 # libraries
+```{r include=FALSE, echo=FALSE}
 library(rmarkdown)
 library(knitr)
 library(ggplot2)

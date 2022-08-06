@@ -1,0 +1,30 @@
+---
+title: "Project_Step_2"
+author: "Joshua Greenert"
+date: '2022-08-06'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("C:/Users/Josh/Documents/GitHub/R-Projects/Statistics For Data Science"))
+```
+
+# libraries
+```{r include=FALSE, echo=FALSE}
+library(rmarkdown)
+library(knitr)
+library(ggplot2)
+library(ggm)
+theme_set(theme_minimal())
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
