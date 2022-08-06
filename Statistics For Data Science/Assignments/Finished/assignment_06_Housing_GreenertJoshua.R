@@ -94,43 +94,43 @@ Because the F value references is much greater than the first model, we can assu
 
 # 7. Perform casewise diagnostics to identify outliers and/or influential cases, storing each function's output in a 
 #  dataframe assigned to a unique variable name.
-firstModel$residuals =  resid(salePrice_lm)
-secondModel$residuals = resid(salePriceWithOthers_lm)
 
-firstModel$standardized.residuals<- rstandard(salePrice_lm)
-firstModel$studentized.residuals<- rstudent(salePrice_lm)
-firstModel$dfbeta<- dfbeta(salePrice_lm)
-firstModel$dffit<- dffits(salePrice_lm)
+secondModel[salePriceWithOthers_lm$large.residuals ]salePrice_lm$residuals =  resid(salePrice_lm)
+salePriceWithOthers_lm$residuals = resid(salePriceWithOthers_lm)
 
-secondModel$standardized.residuals<- rstandard(salePriceWithOthers_lm)
-secondModel$studentized.residuals<- rstudent(salePriceWithOthers_lm)
-secondModel$dfbeta<- dfbeta(salePriceWithOthers_lm)
-secondModel$dffit<- dffits(salePriceWithOthers_lm)
+salePrice_lm$standardized.residuals<- rstandard(salePrice_lm)
+salePrice_lm$studentized.residuals<- rstudent(salePrice_lm)
+salePrice_lm$dfbeta<- dfbeta(salePrice_lm)
+salePrice_lm$dffit<- dffits(salePrice_lm)
+
+salePriceWithOthers_lm$standardized.residuals<- rstandard(salePriceWithOthers_lm)
+salePriceWithOthers_lm$studentized.residuals<- rstudent(salePriceWithOthers_lm)
+salePriceWithOthers_lm$dfbeta<- dfbeta(salePriceWithOthers_lm)
+salePriceWithOthers_lm$dffit<- dffits(salePriceWithOthers_lm)
 
 # 8. Calculate the standardized residuals using the appropriate command, specifying those that are +-2, storing the 
 #  results of large residuals in a variable you create.
-firstModel$large.residuals <- firstModel$standardized.residuals > 2 | firstModel$standardized.residuals < -2
-secondModel$large.residuals <- secondModel$standardized.residuals > 2 | secondModel$standardized.residuals < -2
+salePrice_lm$large.residuals <- salePrice_lm$standardized.residuals > 2 | salePrice_lm$standardized.residuals < -2
+salePriceWithOthers_lm$large.residuals <- salePriceWithOthers_lm$standardized.residuals > 2 | salePriceWithOthers_lm$standardized.residuals < -2
 
 # 9. Use the appropriate function to show the sum of large residuals.
-sum(firstModel$large.residuals)
-sum(secondModel$large.residuals)
+sum(salePrice_lm$large.residuals)
+sum(salePriceWithOthers_lm$large.residuals)
 
 # 10. Which specific variables have large residuals (only cases that evaluate as TRUE)?
-firstModel[firstModel$large.residuals]
-secondModel[secondModel$large.residuals ]
+salePrice_lm[salePrice_lm$large.residuals, c("Sale Price", "sq_ft_lot", "building_grade", "bedrooms", "year_built", standardized.residuals)]
 '''
 This question is a bit unclear but the first model (firstModel$large.residuals) has the most large residuals.
 '''
 
 # 11. Investigate further by calculating the leverage, cooks distance, and covariance rations. Comment on all cases that are problematics.
-firstModel$leverage<- hatvalues(salePrice_lm)
-firstModel$covariance.ratios<- covratio(salePrice_lm)
-firstModel$cooks.distance<- cooks.distance(salePrice_lm)
+salePrice_lm$leverage<- hatvalues(salePrice_lm)
+salePrice_lm$covariance.ratios<- covratio(salePrice_lm)
+salePrice_lm$cooks.distance<- cooks.distance(salePrice_lm)
 
-secondModel$cooks.distance<- cooks.distance(salePriceWithOthers_lm)
-secondModel$leverage<- hatvalues(salePriceWithOthers_lm)
-secondModel$covariance.ratios<- covratio(salePriceWithOthers_lm)
+salePriceWithOthers_lm$cooks.distance<- cooks.distance(salePriceWithOthers_lm)
+salePriceWithOthers_lm$leverage<- hatvalues(salePriceWithOthers_lm)
+salePriceWithOthers_lm$covariance.ratios<- covratio(salePriceWithOthers_lm)
 
 # 12. Perform the necessary calculations to assess the assumption of independence and state if the condition is met or not.
 durbinWatsonTest(salePrice_lm)
@@ -149,8 +149,8 @@ Since the vif is below 10, our model is find and the condition is met.
 
 # 14. Visually check the assumptions related to the residuals using the plot() and hist() functions. Summarize what each graph is 
 #  informing you of and if any anomalies are present.
-histogram<-ggplot(secondModel, aes(studentized.residuals)) + geom_histogram(aes(y=..density..), color= "black", fill = "white") + labs(x = "Studentized Residual", y="Density")
-histogram + stat_function(fun = dnorm, args= list(mean = mean(secondModel$studentized.residuals, na.rm = TRUE), sd = sd(secondModel$studentized.residuals, na.rm=TRUE)), color = "red", size = 1)
+histogram<-ggplot(salePriceWithOthers_lm, aes(studentized.residuals)) + geom_histogram(aes(y=..density..), color= "black", fill = "white") + labs(x = "Studentized Residual", y="Density")
+histogram + stat_function(fun = dnorm, args= list(mean = mean(salePriceWithOthers_lm$studentized.residuals, na.rm = TRUE), sd = sd(salePriceWithOthers_lm$studentized.residuals, na.rm=TRUE)), color = "red", size = 1)
 
 # 15. Overall, is this regression model unbiased? If an unbiased regression model, what does this tell us about the sample vs. 
 #  the entire population model?
