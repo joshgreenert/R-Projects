@@ -1,5 +1,5 @@
 ---
-title: "Project_Step_2"
+title: "Project Step 2"
 author: "Joshua Greenert"
 date: '2022-08-06'
 output: pdf_document
@@ -7,24 +7,123 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set(root.dir = normalizePath("C:/Users/Josh/Documents/GitHub/R-Projects/Statistics For Data Science"))
+knitr::opts_knit$set(root.dir = normalizePath("C:/Users/Josh/Documents/GitHub/R-Projects/Statistics For Data Science/Term Project"))
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
 ```
 
-# libraries
 ```{r include=FALSE, echo=FALSE}
+# libraries
 library(rmarkdown)
 library(knitr)
 library(ggplot2)
 library(ggm)
+library(dplyr)
+library(car)
+library(QuantPsyc)
 theme_set(theme_minimal())
 ```
 
-## Including Plots
+# How to import and clean my data
+1. Minimum Wage (Minimum Wage Data.csv)
+    + Deleted footnotes column from the data set provided.
+2. Unemployment Data (Unemployment.csv)
+    + Deleted rows with empty data.
+    + Reformatted data from columns to rows so that years can be segmented and shown over time.
+    + Deleted area name as state is sufficient and fine-grain data will not be useful in this broad search.
+    + Adjusted column names to be "Civilian_labor_force", "Employed", "Unemployed", and "Unemployment_rate".
+    + Delete US total rows to not affect results.
+    + Removed Puerto Rico from the data set since there isn't any information for income available.
+3. Home Price Index (HPI_master.csv AND HPI_master2.csv)
+    + Deleted all data besides USA for place_id.
+    + Kept a copy of the original dataset as it includes state data we will drill down later.
+4. US Dollar Historical Data (US Data Index Historical Data.csv)
+    + No changes made.
+    
+# What does the final data set look like?
+## Home Price Index
+```{r  echo=FALSE}
+homePriceIndexDF <- read.csv("HPI_master2.csv")
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+str(homePriceIndexDF)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Unemployment Data
+```{r  echo=FALSE}
+unemploymentHistoryDF <- read.csv("Unemployment.csv")
+
+str(unemploymentHistoryDF)
+```
+
+## US Dollar Historical Data
+```{r  echo=FALSE}
+dollarHistoryDF <- read.csv("US Dollar Index Historical Data.csv")
+
+str(dollarHistoryDF)
+```
+
+## Minimum Wage Data
+```{r  echo=FALSE}
+minimumWageDF <- read.csv("Minimum Wage Data.csv")
+
+str(minimumWageDF)
+```
+
+# What information is not self-evident?
+While the data do follow similar trends (i.e. the US dollar and Home Price Index), they fail to make a
+one to one connection with the data points in how they establish a connection; furthermore, they fail
+to provide a clean correlation where the data shares any dependency upon one another.  Unemployment
+may play a larger role in the housing market issues previously but do not directly indicate a certainty.
+
+# What are different ways you could look at this data?
+These data will need to be compared within the same charts to announce any key findings or missing 
+connections.  Would the reduction of the US dollar impact the value of homes overall?  Questions about
+the US dollar need to be defined further as the dollar and home prices do have a direct relationship; 
+without looking into the US dollar further, we may overlook that the value of the dollar going down can
+mean that the value of the home price would also reduce.
+
+# How do you plan to slice and dice the data?
+Certain states have different reported numbers for unemployment, minimum wage, and their respective home
+price index.  These states may contain data that has been overlooked as to why they may not have been 
+impacted as harshly as others.  The data is dependent on time, so the timelines will need to be trimmed
+within the code to match up appropriately with one another.  These key considerations will be crucial
+to understanding their connection with one another.
+
+# How could you summarize your data to answer key questions?
+By comparing the data from the US dollar to the home price index, we can relate the impact taken on the US
+dollar and how that may effect the housing market soon.  For example, the home price index is at all-time
+highs at the moment while the US dollar is drastically down.  Will this be significant enough to enforce
+a downward trend?  The data from the minimum wage dataframe, when compared with the unemployment and home price index may shed light on states that weren't impacted nearly as much; this can show us states that were less effected.  Essentially, this data will be like a Sudoku puzzle where you solve problems with data
+you know you don't know.
+
+# What types of plots and tables will help you illustrate findings?
+Histograms, scatterplots, and Bar plots are the main plots that will be used to display the data.  These
+are used primarily for their visibility into the data as well as their visible trend lines to make 
+connections with the datasets.
+
+## Examples of Plots
+```{r  echo=FALSE}
+# Home price index
+ggplot(homePriceIndexDF, aes(x = yr, y = index_sa, col = period)) + geom_point() +
+  geom_smooth() + ggtitle("Home Price Index") + xlab("Year") + ylab("NSA")
+
+# Minimum wage
+ggplot(minimumWageDF, aes(x = Year, y = Effective.Minimum.Wage, col = State)) + geom_point() + geom_smooth()
+
+# US Dollar 
+ggplot(dollarHistoryDF, aes(Price)) + geom_histogram(bins = 100) + ggtitle("US Dollar Index") + xlab("Date") + ylab("Price")
+
+# Unemployment sample
+flUnemployment <- subset(unemploymentHistoryDF, State == "FL")
+ggplot(flUnemployment, aes(x = Year, y = Unemployment_rate)) + geom_point() +
+  geom_smooth() + ggtitle("FL Unemployment Rate") + xlab("Year") + ylab("Rate Data")
+```
+
+# Do you plan on incorporating any machine learning techniques to answer questions?
+This problem seems to have enough data surrounding it, so the answers to the data should be fairly easy to find.  No machine learning techniques or algorithms will need to be used to surmise an appropriate conclusion.
+
+# Questions for future steps
+    + Will more data need to be aggregated once other connections have been made?
+    + Are there other dependent factors for the HPI that are not available to general public?
+    + Have new banking regulations reduced the impact of the housing market bubble that happened in 2008?
+
+
