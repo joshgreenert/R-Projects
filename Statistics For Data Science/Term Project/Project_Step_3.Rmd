@@ -1,0 +1,41 @@
+---
+title: "Final Project Step 3"
+author: "Joshua Greenert"
+date: '2022-08-12'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("C:/Users/Josh/Documents/GitHub/R-Projects/Statistics For Data Science/Term Project"))
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+```{r include=FALSE, echo=FALSE}
+# libraries
+library(rmarkdown)
+library(knitr)
+library(ggplot2)
+library(ggm)
+library(dplyr)
+library(useful)
+library(QuantPsyc)
+theme_set(theme_minimal())
+```
+
+# Introduction
+In 2008, there was a major housing crisis where lenders were found to be responsible for allowing millions of Americans to purchase homes they could not afford; thus, those Americans lost their homes.  The trickle effect that took place after this incident leaked throughout the marketplace causing one of the worst stock market crashes in history.  Changes were enforced by the government, and new federal regulations were created to avoid this situation from ever occurring again.  However, as the S & P fund — a fund holding the majority of technology, health care, and other major stocks within it — dipped over 100 points, people began to suspect another recession.  Moreover, while the stock market is reaching all-time lows, the housing market has never been stronger.  Due to the history of the housing market and its parallels with the stock market, users now believe that the housing market is overvalued and another crash is soon to occur.
+
+# The Problem Statement
+Since fear has been known to agitate consumers, this project's goal was to understand the housing market better to isolate potential variables that would indicate the veracity of the claims made.  During this assessment, I utilized four separate datasets directly related to consumer spending and the housing market to better understand the bigger picture.  These datasets included unemployment rates and data from the United States government Census Bureau, Home Price Index (HPI) data, minimum wage data, and historical data covering the lows and highs of the United States dollar.
+
+# How Did You Address The Problem
+
+
+# Analysis
+
+# Implications
+
+# Concluding Remarks
+
+

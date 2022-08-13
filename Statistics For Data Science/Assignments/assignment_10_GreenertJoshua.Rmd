@@ -1,0 +1,244 @@
+---
+title: "Assignment 10"
+author: "Joshua Greenert"
+date: '2022-08-12'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set(root.dir = normalizePath("C:/Users/Josh/Documents/GitHub/R-Projects/Statistics For Data Science/"))
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+```{r include=FALSE, echo=FALSE}
+# libraries
+library(rmarkdown)
+library(knitr)
+library(ggplot2)
+library(ggm)
+library(class)
+library(useful)
+library(caTools)
+library(NbClust)
+library(factoextra)
+theme_set(theme_minimal())
+```
+
+
+```{r echo=FALSE}
+# Contains label, x, and y; label is either 0 or 1
+binaryClassifierDF <- read.csv("data/binary-classifier-data.csv")
+# Contains label, x, and y; label can be 0, 1, or 2
+trinaryClassifierDF <- read.csv("data/trinary-classifier-data.csv")
+# Clustering data 
+clusterDataDF <- read.csv("data/clustering-data.csv")
+```
+
+# Scatterplots 
+```{r echo=FALSE}
+plot(binaryClassifierDF$x, binaryClassifierDF$y, main="Binary Classification Scatterplot",
+   xlab="X Data", ylab="Y Data", pch=19)
+
+plot(trinaryClassifierDF$x, trinaryClassifierDF$y, main="Trinary Classification Scatterplot",
+   xlab="X Data", ylab="Y Data", pch=19)
+
+```
+
+# Looking at the plots, would linear classification work here?
+Since the data appears to be scattered all over the x and y axis, it's unlikely that a linear classification would be effective since the models aren't linear.
+
+# Binary K Nearest Neighbors 
+```{r echo=FALSE}
+# Check for k = 3 to see the accuracy.
+split <- sample.split(binaryClassifierDF, SplitRatio = .8)
+trainBinary <- subset(binaryClassifierDF, split == "TRUE")
+testBinary <- subset(binaryClassifierDF, split == "FALSE")
+knnBinary3 <- knn(train = trainBinary, test = testBinary, cl = trainBinary$label, k = 3)
+
+# Check the accuracy of our product.
+accuracyCheck3 <- mean(knnBinary3 == testBinary$label)
+print(paste("When k equals 3, accuracy is: ", round(accuracyCheck3, digits = 4)))
+
+# Check for k = 5 to see the accuracy.
+split <- sample.split(binaryClassifierDF, SplitRatio = .8)
+trainBinary <- subset(binaryClassifierDF, split == "TRUE")
+testBinary <- subset(binaryClassifierDF, split == "FALSE")
+knnBinary5 <- knn(train = trainBinary, test = testBinary, cl = trainBinary$label, k = 5)
+
+# Check the accuracy of our product.
+accuracyCheck5 <- mean(knnBinary5 == testBinary$label)
+print(paste("When k equals 5, accuracy is: ", round(accuracyCheck5, digits = 4)))
+
+# Check for k = 10 to see the accuracy.
+split <- sample.split(binaryClassifierDF, SplitRatio = .8)
+trainBinary <- subset(binaryClassifierDF, split == "TRUE")
+testBinary <- subset(binaryClassifierDF, split == "FALSE")
+knnBinary10 <- knn(train = trainBinary, test = testBinary, cl = trainBinary$label, k = 10)
+
+# Check the accuracy of our product.
+accuracyCheck10 <- mean(knnBinary10 == testBinary$label)
+print(paste("When k equals 10, accuracy is: ", round(accuracyCheck10, digits = 4)))
+
+# Check for k = 15 to see the accuracy.
+split <- sample.split(binaryClassifierDF, SplitRatio = .8)
+trainBinary <- subset(binaryClassifierDF, split == "TRUE")
+testBinary <- subset(binaryClassifierDF, split == "FALSE")
+knnBinary15 <- knn(train = trainBinary, test = testBinary, cl = trainBinary$label, k = 15)
+
+# Check the accuracy of our product.
+accuracyCheck15 <- mean(knnBinary15 == testBinary$label)
+print(paste("When k equals 15, accuracy is: ", round(accuracyCheck15, digits = 4)))
+
+# Check for k = 20 to see the accuracy.
+split <- sample.split(binaryClassifierDF, SplitRatio = .8)
+trainBinary <- subset(binaryClassifierDF, split == "TRUE")
+testBinary <- subset(binaryClassifierDF, split == "FALSE")
+knnBinary20 <- knn(train = trainBinary, test = testBinary, cl = trainBinary$label, k = 20)
+
+# Check the accuracy of our product.
+accuracyCheck20 <- mean(knnBinary20 == testBinary$label)
+print(paste("When k equals 20, accuracy is: ", round(accuracyCheck20, digits = 4)))
+
+# Check for k = 25 to see the accuracy.
+split <- sample.split(binaryClassifierDF, SplitRatio = .8)
+trainBinary <- subset(binaryClassifierDF, split == "TRUE")
+testBinary <- subset(binaryClassifierDF, split == "FALSE")
+knnBinary25 <- knn(train = trainBinary, test = testBinary, cl = trainBinary$label, k = 25)
+
+# Check the accuracy of our product.
+accuracyCheck25 <- mean(knnBinary25 == testBinary$label)
+print(paste("When k equals 25, accuracy is: ", round(accuracyCheck25, digits = 4)))
+```
+# Trinary K Nearest Neighbors 
+```{r echo=FALSE}
+# Check for k = 3 to see the accuracy.
+split <- sample.split(trinaryClassifierDF, SplitRatio = .8)
+trainTrinary <- subset(trinaryClassifierDF, split == "TRUE")
+testTrinary <- subset(trinaryClassifierDF, split == "FALSE")
+knnTrinary3 <- knn(train = trainTrinary, test = testTrinary, cl = trainTrinary$label, k = 3)
+
+# Check the accuracy of our product.
+accuracyCheck3 <- mean(knnTrinary3 == testTrinary$label)
+print(paste("When k equals 3, accuracy is: ", round(accuracyCheck3, digits = 4)))
+
+# Check for k = 5 to see the accuracy.
+split <- sample.split(trinaryClassifierDF, SplitRatio = .8)
+trainTrinary <- subset(trinaryClassifierDF, split == "TRUE")
+testTrinary <- subset(trinaryClassifierDF, split == "FALSE")
+knnTrinary5 <- knn(train = trainTrinary, test = testTrinary, cl = trainTrinary$label, k = 5)
+
+# Check the accuracy of our product.
+accuracyCheck5 <- mean(knnTrinary5 == testTrinary$label)
+print(paste("When k equals 5, accuracy is: ", round(accuracyCheck5, digits = 4)))
+
+# Check for k = 10 to see the accuracy.
+split <- sample.split(trinaryClassifierDF, SplitRatio = .8)
+trainTrinary <- subset(trinaryClassifierDF, split == "TRUE")
+testTrinary <- subset(trinaryClassifierDF, split == "FALSE")
+knnTrinary10 <- knn(train = trainTrinary, test = testTrinary, cl = trainTrinary$label, k = 10)
+
+# Check the accuracy of our product.
+accuracyCheck10 <- mean(knnTrinary10 == testTrinary$label)
+print(paste("When k equals 10, accuracy is: ", round(accuracyCheck10, digits = 4)))
+
+# Check for k = 15 to see the accuracy.
+split <- sample.split(trinaryClassifierDF, SplitRatio = .8)
+trainTrinary <- subset(trinaryClassifierDF, split == "TRUE")
+testTrinary <- subset(trinaryClassifierDF, split == "FALSE")
+knnTrinary15 <- knn(train = trainTrinary, test = testTrinary, cl = trainTrinary$label, k = 15)
+
+# Check the accuracy of our product.
+accuracyCheck15 <- mean(knnTrinary15 == testTrinary$label)
+print(paste("When k equals 15, accuracy is: ", round(accuracyCheck15, digits = 4)))
+
+# Check for k = 20 to see the accuracy.
+split <- sample.split(trinaryClassifierDF, SplitRatio = .8)
+trainTrinary <- subset(trinaryClassifierDF, split == "TRUE")
+testTrinary <- subset(trinaryClassifierDF, split == "FALSE")
+knnTrinary20 <- knn(train = trainTrinary, test = testTrinary, cl = trainTrinary$label, k = 20)
+
+# Check the accuracy of our product.
+accuracyCheck20 <- mean(knnTrinary20 == testTrinary$label)
+print(paste("When k equals 20, accuracy is: ", round(accuracyCheck20, digits = 4)))
+
+# Check for k = 25 to see the accuracy.
+split <- sample.split(trinaryClassifierDF, SplitRatio = .8)
+trainTrinary <- subset(trinaryClassifierDF, split == "TRUE")
+testTrinary <- subset(trinaryClassifierDF, split == "FALSE")
+knnTrinary25 <- knn(train = trainTrinary, test = testTrinary, cl = trainTrinary$label, k = 25)
+
+# Check the accuracy of our product.
+accuracyCheck25 <- mean(knnTrinary25 == testTrinary$label)
+print(paste("When k equals 25, accuracy is: ", round(accuracyCheck25, digits = 4)))
+
+```
+# Accuracy Results for Binary and Trinary
+With the binary and the trinary datasets, we can see that our highest degree of accuracy happens when k = 3 as the binary dataset shows 98.00% and the trinary dataset shows us 94.83%.  As we increase k, we see that the accuracy percentage reduces.
+
+
+# Clustering
+## Cluster Distance Average
+```{r echo=FALSE}
+# Find the distance from the data.
+clusterDistance <- dist(clusterDataDF, method = "euclidean")
+clusterDistanceMean <- mean(clusterDistance)
+clusterDistanceMean
+
+```
+
+## Cluster K-Means
+```{r echo=FALSE}
+# Set all the values for each center.
+clusterKmeans2 <- kmeans(x = clusterDataDF, centers = 2)
+clusterKmeans3 <- kmeans(x = clusterDataDF, centers = 3)
+clusterKmeans4 <- kmeans(x = clusterDataDF, centers = 4)
+clusterKmeans5 <- kmeans(x = clusterDataDF, centers = 5)
+clusterKmeans6 <- kmeans(x = clusterDataDF, centers = 6)
+clusterKmeans7 <- kmeans(x = clusterDataDF, centers = 7)
+clusterKmeans8 <- kmeans(x = clusterDataDF, centers = 8)
+clusterKmeans9 <- kmeans(x = clusterDataDF, centers = 9)
+clusterKmeans10 <- kmeans(x = clusterDataDF, centers = 10)
+clusterKmeans11 <- kmeans(x = clusterDataDF, centers = 11)
+clusterKmeans12 <- kmeans(x = clusterDataDF, centers = 12)
+
+# Set the seed 
+set.seed(278613)
+
+# Plot all clusters.
+plot(clusterKmeans2, data = clusterDataDF)
+plot(clusterKmeans3, data = clusterDataDF)
+plot(clusterKmeans4, data = clusterDataDF)
+plot(clusterKmeans5, data = clusterDataDF)
+plot(clusterKmeans6, data = clusterDataDF)
+plot(clusterKmeans7, data = clusterDataDF)
+plot(clusterKmeans8, data = clusterDataDF)
+plot(clusterKmeans9, data = clusterDataDF)
+plot(clusterKmeans10, data = clusterDataDF)
+plot(clusterKmeans11, data = clusterDataDF)
+plot(clusterKmeans12, data = clusterDataDF)
+
+```
+
+## Cluster Elbow Points
+```{r echo=FALSE}
+# Set where x = 2
+fviz_nbclust(clusterDataDF, kmeans, method = "wss") + geom_vline(xintercept = 2, linetype = 2)
+# Set where x = 6
+fviz_nbclust(clusterDataDF, kmeans, method = "wss") + geom_vline(xintercept = 6, linetype = 2)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
