@@ -30,12 +30,15 @@ In 2008, there was a major housing crisis where lenders were found to be respons
 Since fear has been known to agitate consumers, this project's goal was to understand the housing market better to isolate potential variables that would indicate the veracity of the claims made.  During this assessment, I utilized four separate datasets directly related to consumer spending and the housing market to better understand the bigger picture.  These datasets included unemployment rates and data from the United States government Census Bureau, Home Price Index (HPI) data, minimum wage data, and historical data covering the lows and highs of the United States dollar.
 
 # How Did You Address The Problem
-
+I cleaned the datasets and began exploring the data for potential connections.  After going through all fifty states to compare the HPI with the rate of wage increase, it was clear there wasn't an answer between the minimum wage and the Home Price Index.  The resulting accuracy checks were 0% for every state instance.  Checks for correlation were not statistically significant either.  The historical index for the US dollar, however, did show some promising results with correlation, but correlation does not equal causation.  The likelihood that the dollar would be worth less during a time of recession is an expected result so the data doesn't provide any insight into the decline.  Unemployment in this regard was also ineffective about proving anything beyond a visual expectation of what should occur during a time of recession.  
 
 # Analysis
+The index of the US dollar, when compared with the HPI, show similar trend lines during times of recession.  It would be statistically likely that if the US dollar commences a downward trend line, we would expect to see a similar result within the housing market.  While this doesn't necessarily guarantee the situation will occur, it highly probable as their data tends to flow in a similar pattern past the year of 2009.  Unemployment data follows a similar trend but has other variables within the dataset that are largely unaccounted for.
 
 # Implications
+From the implications of a quasi-correlation between the US dollar and the HPI, we can check the index of the US dollar as a guide to foresee what may be expected for the housing market.  Since the value of the US dollar has been largely burgeoning over the past three years, we can assume that the housing market should be fine for now.  As the US dollar begins to dip below 100 — as it has in 2008, 2011, and 2014 — we can expect a similar trend within the housing market to follow suit.
 
 # Concluding Remarks
+While the data overall are mainly inconclusive, We can assess the overall value of the US dollar to compare what will take place in the housing market generally.  Since the US dollar has grown over the past three years, we can predict that the housing market should be essentially safe for the time being.  However, there are still significant data points that have not been discovered to outline the behavior of the housing market sufficiently.  The news may look promising, but as the trader axium goes, "what goes up can always come down".  
 
 
